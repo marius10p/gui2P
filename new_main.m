@@ -60,7 +60,9 @@ else
     h.dat.cl.excluded_regions = zeros(h.dat.cl.Ly, h.dat.cl.Lx);
     h.dat.cl.excl_pix_perc    = zeros(h.dat.cl.Ly, h.dat.cl.Lx);
     h.dat.cl.topregion        = ones(h.dat.cl.Ly, h.dat.cl.Lx);
-    % h = get_connected_regions(h);
+    if isfield(h.dat.stat, 'parent')
+        h = get_parent_stats(h);
+    end
     
     h.dat.res.iclust = reshape(h.dat.res.iclust, h.dat.cl.Ly, h.dat.cl.Lx);
     
@@ -69,8 +71,8 @@ else
     h.dat.cl.rands        = h.dat.cl.rands_orig;
     
     h.dat.res.Mrs_thresh_orig = 1.3;
-    h.dat.cl.npix_low_orig   = 30;
-    h.dat.cl.npix_high_orig  = 400;
+    h.dat.cl.npix_low_orig   = 50;
+    h.dat.cl.npix_high_orig  = 300;
     
     h = setOriginalThresh(h);
     
@@ -402,6 +404,7 @@ redraw_figure(h);
 guidata(hObject,h);
 
 function edit35_CreateFcn(hObject, eventdata, h)
+set(hObject,'String', num2str(2));
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -428,6 +431,7 @@ redraw_figure(h);
 guidata(hObject,h);
 
 function edit39_CreateFcn(hObject, eventdata, h)
+set(hObject,'String', num2str(400));
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -440,6 +444,7 @@ redraw_figure(h);
 guidata(hObject,h);
 
 function edit40_CreateFcn(hObject, eventdata, h)
+set(hObject,'String', num2str(30));
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -599,3 +604,105 @@ h = buildLambdaValue(h);
 guidata(hObject,h);
 redraw_figure(h);
 
+
+
+function edit45_Callback(hObject, eventdata, h)
+h.dat.cl.mrs_parent_max = str2double(get(h.edit45,'String'));
+h = splitROIleftright(h);
+h = buildLambdaValue(h);
+redraw_figure(h);
+guidata(hObject,h);
+
+% --- Executes during object creation, after setting all properties.
+function edit45_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit45 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+set(hObject,'String', num2str(Inf));
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit46_Callback(hObject, eventdata, h)
+h.dat.cl.npix_par_max = str2double(get(h.edit46,'String'));
+h = splitROIleftright(h);
+h = buildLambdaValue(h);
+redraw_figure(h);
+guidata(hObject,h);
+
+% --- Executes during object creation, after setting all properties.
+function edit46_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit46 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+set(hObject,'String', num2str(400));
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit47_Callback(hObject, eventdata, h)
+h.dat.cl.npix_res_max = str2double(get(h.edit47,'String'));
+h = splitROIleftright(h);
+h = buildLambdaValue(h);
+redraw_figure(h);
+guidata(hObject,h);
+
+
+% --- Executes during object creation, after setting all properties.
+function edit47_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit47 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+set(hObject,'String', num2str(100));
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit48_Callback(hObject, eventdata, h)
+h.dat.cl.nreg_max = str2double(get(h.edit48,'String'));
+h = splitROIleftright(h);
+h = buildLambdaValue(h);
+redraw_figure(h);
+guidata(hObject,h);
+
+% --- Executes during object creation, after setting all properties.
+function edit48_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit48 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+set(hObject,'String', num2str(40));
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit49_Callback(hObject, eventdata, h)
+h.dat.cl.VperPix_min = str2double(get(h.edit49,'String'));
+h = splitROIleftright(h);
+h = buildLambdaValue(h);
+redraw_figure(h);
+guidata(hObject,h);
+
+
+
+% --- Executes during object creation, after setting all properties.
+function edit49_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit49 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+set(hObject,'String', num2str(0));
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
