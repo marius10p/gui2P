@@ -46,11 +46,12 @@ if exist('dat', 'var')
     h.dat = dat;
     clear dat
 else
+    h.dat = [];
     h.dat.filename = fullfile(filepath1, filename1);
     h.dat.res  = res;
     h.dat.stat = stat;
     h.dat.ops  = ops;
-
+    
     h.dat.cl.Mrs      = [stat.mrs]./[stat.mrs0];
     h.dat.cl.npix     = [stat.npix];
     h.dat.cl.Ly       = numel(ops.yrange);
@@ -84,6 +85,7 @@ else
     
     
     h.dat.cl.manual = zeros(h.dat.ops.Nk, 1);
+    h.dat.cl.redcell = zeros(h.dat.ops.Nk, 1);
     h           = splitROIleftright(h);
     
     icell = find(h.dat.cl.iscell);
@@ -104,9 +106,21 @@ else
     h.dat.figure.y1all = round(linspace(1/20 * h.dat.cl.Ly, h.dat.cl.Ly, 4));
 
     h.dat.F.Fcell = Fcell;
+    
+    h.dat.maxmap = 1;
+    if isfield(ops, 'mimg1') && ~isempty(ops.mimg1)
+        h.dat.maxmap = h.dat.maxmap + 1;
+        h.dat.mimg(:,:,h.dat.maxmap) = ops.mimg1(ops.yrange, ops.xrange);
+    end
+    if isfield(ops, 'imgPV') && ~isempty(ops.imgPV)
+        h.dat.maxmap = h.dat.maxmap + 1;
+        h.dat.mimg(:,:,h.dat.maxmap) = ops.imgPV(ops.yrange, ops.xrange);
+    end
+    
     clear Fcell;
 end
 
+h.dat.map = 1;
 h.dat.F.trace = [];
 for i = 1:length(h.dat.F.Fcell)
     h.dat.F.trace = cat(2, h.dat.F.trace, h.dat.F.Fcell{i});
@@ -560,6 +574,14 @@ switch eventdata.Key
     case 's'
         % manual selection of units
         pushbutton64_Callback(hObject, eventdata, h);
+    case 'q'
+        pushbutton87_Callback(hObject, eventdata, h);
+    case 'w'
+        pushbutton89_Callback(hObject, eventdata, h);
+    case 'e'
+        if h.dat.maxmap>2
+            pushbutton90_Callback(hObject, eventdata, h);
+        end
 end
 
 
@@ -591,6 +613,13 @@ switch eventdata.Source.SelectionType
         h.dat.cl.manual(h.dat.F.ichosen) = 0;
         h = splitROIleftright(h);
         h = buildLambdaValue(h);
+    case 'extend'
+        h.dat.cl.redcell(h.dat.F.ichosen) = 1 -  h.dat.cl.redcell(h.dat.F.ichosen);
+        if h.dat.cl.redcell(h.dat.F.ichosen)
+           display('red') 
+        else
+            display('not red') 
+        end
 end
 
 redraw_fluorescence(h);
@@ -706,3 +735,33 @@ set(hObject,'String', num2str(0));
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in pushbutton86.
+function pushbutton86_Callback(hObject, eventdata, h)
+
+if h.dat.map < h.dat.maxmap
+    h.dat.map = h.dat.map + 1;
+    redraw_meanimg(h);
+else
+    h.dat.map = 1;
+    redraw_figure(h);
+end
+guidata(hObject,h);
+
+
+% --- Executes on button press in pushbutton87.
+function pushbutton87_Callback(hObject, eventdata, h)
+ h.dat.map = 1;
+redraw_figure(h);
+
+
+% --- Executes on button press in pushbutton89.
+function pushbutton89_Callback(hObject, eventdata, h)
+ h.dat.map = 2;
+redraw_meanimg(h);
+
+% --- Executes on button press in pushbutton90.
+function pushbutton90_Callback(hObject, eventdata, h)
+ h.dat.map = 3;
+redraw_meanimg(h);
