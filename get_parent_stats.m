@@ -28,7 +28,7 @@ h.dat.cl.VperPix    = VperPix(iparent);
 h.dat.cl.mrs_parent = mrs(iparent);
 
 h.dat.cl.mrs_parent_max = Inf;
-h.dat.cl.npix_res_max   = 100;
-h.dat.cl.npix_par_max   = 400;
-h.dat.cl.nreg_max       = 40;
+h.dat.cl.npix_res_max   = 1000;
+h.dat.cl.npix_par_max   = 4000;
+h.dat.cl.nreg_max       = 200;
 h.dat.cl.VperPix_min    = 0;

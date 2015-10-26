@@ -89,6 +89,9 @@ else
     h           = splitROIleftright(h);
     
     icell = find(h.dat.cl.iscell);
+    if isempty(icell)
+       icell(1) = ceil(rand * numel(h.dat.cl.iscell));  
+    end
     h.dat.F.ichosen = icell(1); %ceil(rand * numel(icell))
     
     Sat = ones(h.dat.cl.Ly, h.dat.cl.Lx);
