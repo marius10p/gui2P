@@ -109,6 +109,7 @@ else
     h.dat.figure.y1all = round(linspace(1/20 * h.dat.cl.Ly, h.dat.cl.Ly, 4));
 
     h.dat.F.Fcell = Fcell;
+    h.dat.F.FcellNeu = FcellNeu;
     
     h.dat.maxmap = 1;
     if isfield(ops, 'mimg1') && ~isempty(ops.mimg1)
@@ -121,6 +122,7 @@ else
     end
     
     clear Fcell;
+    clear FcellNeu;
 end
 
 h.dat.map = 1;
