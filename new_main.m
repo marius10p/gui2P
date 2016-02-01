@@ -114,11 +114,15 @@ else
     h.dat.maxmap = 1;
     if isfield(ops, 'mimg1') && ~isempty(ops.mimg1)
         h.dat.maxmap = h.dat.maxmap + 1;
-        h.dat.mimg(:,:,h.dat.maxmap) = ops.mimg1(ops.yrange, ops.xrange);
+        Imean = ops.mimg1(ops.yrange, ops.xrange);
+%         Imean = Imean - my_conv(my_conv(Imean, 2)', 2)';
+        
+%         Imean = Imean ./ my_conv(my_conv(Imean.^2, 3)', 3)'.^.5;
+        h.dat.mimg(:,:,h.dat.maxmap) = Imean; 
     end
-    if isfield(ops, 'imgPV') && ~isempty(ops.imgPV)
+    if isfield(ops, 'mimgRED') && ~isempty(ops.mimgRED)
         h.dat.maxmap = h.dat.maxmap + 1;
-        h.dat.mimg(:,:,h.dat.maxmap) = ops.imgPV(ops.yrange, ops.xrange);
+        h.dat.mimg(:,:,h.dat.maxmap) = ops.mimgRED(ops.yrange, ops.xrange);
     end
     
     clear Fcell;
