@@ -123,6 +123,9 @@ else
     if isfield(ops, 'mimgRED') && ~isempty(ops.mimgRED)
         h.dat.maxmap = h.dat.maxmap + 1;
         h.dat.mimg(:,:,h.dat.maxmap) = ops.mimgRED(ops.yrange, ops.xrange);
+    elseif ops.AlignToRedChannel == 1
+        h.dat.maxmap = h.dat.maxmap + 1;
+        h.dat.mimg(:,:,h.dat.maxmap) = ops.mimg(ops.yrange, ops.xrange);
     end
     
     clear Fcell;
