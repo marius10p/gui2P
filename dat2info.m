@@ -110,7 +110,6 @@ for iExp = 1:nExps
     rectSource = [data.ops.yrange(1), data.ops.xrange(1), data.ops.yrange(end), data.ops.xrange(end)];
     rectDest = [1, 1, size(data.ops.mimg1)]; % full size of the targetFrame
     info.targetFrameROI = ppbox.remapROI(info.ROI.CellMaps, rectSource, rectDest);
-    info = ppbox.getROIExtras(info);
     info.F = double(data.F.Fcell{iExp}(roiIdx, :)');
     info.registeredMIP = data.ops.mimg1(data.ops.yrange(:), data.ops.xrange(:));
     
@@ -150,6 +149,14 @@ for iExp = 1:nExps
     if isfield(data, 'opsNpil')
         info.opsNpil = data.opsNpil;
     end
+    
+    % add info about microscope
+    if isfield(data.ops, 'microID')
+        info.microID = dat.ops.microID;
+    elseif isfield(ops, 'microID')
+        info.microID = ops.microID;
+    end
+    info = ppbox.getROIExtras(info);
     
     [pathstr, name, ext] = fileparts(filename);
     info.folderDat = pathstr; % folder containing results from Suite2P and gui2P
