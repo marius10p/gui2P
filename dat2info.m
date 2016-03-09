@@ -152,7 +152,7 @@ for iExp = 1:nExps
     
     % add info about microscope
     if isfield(data.ops, 'microID')
-        info.microID = dat.ops.microID;
+        info.microID = data.ops.microID;
     elseif isfield(ops, 'microID')
         info.microID = ops.microID;
     end
