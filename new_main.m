@@ -110,7 +110,10 @@ else
     h.dat.figure.y1all = round(linspace(1/20 * h.dat.cl.Ly, h.dat.cl.Ly, 4));
 
     h.dat.F.Fcell = Fcell;
-%     h.dat.F.FcellNeu = FcellNeu;
+
+    if exist('FcellNeu', 'var')
+        h.dat.F.FcellNeu = FcellNeu;
+    end
     
     h.dat.maxmap = 1;
     if isfield(ops, 'mimg1') && ~isempty(ops.mimg1)
@@ -124,6 +127,9 @@ else
     if isfield(ops, 'mimgRED') && ~isempty(ops.mimgRED)
         h.dat.maxmap = h.dat.maxmap + 1;
         h.dat.mimg(:,:,h.dat.maxmap) = ops.mimgRED(ops.yrange, ops.xrange);
+    elseif ops.AlignToRedChannel == 1
+        h.dat.maxmap = h.dat.maxmap + 1;
+        h.dat.mimg(:,:,h.dat.maxmap) = ops.mimg(ops.yrange, ops.xrange);
     end
     
     clear Fcell;
