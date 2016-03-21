@@ -37,6 +37,7 @@ function pushbutton17_Callback(hObject, eventdata, h)
 % [filename1,filepath1]=uigetfile('\\zserver\Lab\Share\Marius\', 'Select Data File');
 [filename1,filepath1]=uigetfile('D:\DATA\F\', 'Select Data File');
 
+clear dat
 load(fullfile(filepath1, filename1));
 
 rng('default')
@@ -109,7 +110,7 @@ else
     h.dat.figure.y1all = round(linspace(1/20 * h.dat.cl.Ly, h.dat.cl.Ly, 4));
 
     h.dat.F.Fcell = Fcell;
-    h.dat.F.FcellNeu = FcellNeu;
+%     h.dat.F.FcellNeu = FcellNeu;
     
     h.dat.maxmap = 1;
     if isfield(ops, 'mimg1') && ~isempty(ops.mimg1)
@@ -132,6 +133,7 @@ end
 h.dat.map = 1;
 h.dat.F.trace = [];
 for i = 1:length(h.dat.F.Fcell)
+%     h.dat.F.trace = cat(2, h.dat.F.trace, h.dat.F.Fcell{i});
     h.dat.F.trace = cat(2, h.dat.F.trace, h.dat.F.Fcell{i});
 end
 
