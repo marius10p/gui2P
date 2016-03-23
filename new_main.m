@@ -124,6 +124,7 @@ else
 %         Imean = Imean ./ my_conv(my_conv(Imean.^2, 3)', 3)'.^.5;
         h.dat.mimg(:,:,h.dat.maxmap) = Imean; 
     end
+    ops.AlignToRedChannel = getOr(ops, 'AlignToRedChannel', 0);
     if isfield(ops, 'mimgRED') && ~isempty(ops.mimgRED)
         h.dat.maxmap = h.dat.maxmap + 1;
         h.dat.mimg(:,:,h.dat.maxmap) = ops.mimgRED(ops.yrange, ops.xrange);
