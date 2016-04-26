@@ -49,7 +49,9 @@ if exist('dat', 'var')
 else
     h.dat = [];
     h.dat.filename = fullfile(filepath1, filename1);
+%     res.iclust(res.iclust(:)==0) = 1;
     h.dat.res  = res;
+    h.dat.res.lambda = normalize_clusters(res.M, res.iclust);
     h.dat.stat = stat;
     h.dat.ops  = ops;
     
