@@ -45,6 +45,8 @@ rng('default')
 % keyboard;
 if exist('dat', 'var')
     h.dat = dat;
+    h.dat.cl.rands_orig   = .2 + .6 * rand(1, h.dat.ops.Nk);
+    h.dat.cl.rands        = h.dat.cl.rands_orig;
     clear dat
 else
     h.dat = [];
@@ -71,7 +73,7 @@ else
     h.dat.res.iclust = reshape(h.dat.res.iclust, h.dat.cl.Ly, h.dat.cl.Lx);
     
     h.dat.ops.Nk = numel(stat);
-    h.dat.cl.rands_orig   = rand(1, h.dat.ops.Nk);
+    h.dat.cl.rands_orig   = .2 + .6 * rand(1, h.dat.ops.Nk);
     h.dat.cl.rands        = h.dat.cl.rands_orig;
     
     h.dat.res.Mrs_thresh_orig = 1.3;
@@ -635,6 +637,10 @@ switch eventdata.Source.SelectionType
         h = buildLambdaValue(h);
     case 'extend'
         h.dat.cl.redcell(h.dat.F.ichosen) = 1 -  h.dat.cl.redcell(h.dat.F.ichosen);
+        h.dat.cl.rands(h.dat.F.ichosen) = 0;
+        h.dat.img1.H       = reshape(h.dat.cl.rands(h.dat.res.iclust), h.dat.cl.Ly, h.dat.cl.Lx);
+        h.dat.img2.H       = reshape(h.dat.cl.rands(h.dat.res.iclust), h.dat.cl.Ly, h.dat.cl.Lx);
+        
         if h.dat.cl.redcell(h.dat.F.ichosen)
            display('red') 
         else
