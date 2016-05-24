@@ -637,7 +637,12 @@ switch eventdata.Source.SelectionType
         h = buildLambdaValue(h);
     case 'extend'
         h.dat.cl.redcell(h.dat.F.ichosen) = 1 -  h.dat.cl.redcell(h.dat.F.ichosen);
-        h.dat.cl.rands(h.dat.F.ichosen) = 0;
+        
+        if h.dat.cl.redcell(h.dat.F.ichosen)==1
+            h.dat.cl.rands(h.dat.F.ichosen) = 0;
+        else
+             h.dat.cl.rands(h.dat.F.ichosen) = h.dat.cl.rands_orig(h.dat.F.ichosen);
+        end
         h.dat.img1.H       = reshape(h.dat.cl.rands(h.dat.res.iclust), h.dat.cl.Ly, h.dat.cl.Lx);
         h.dat.img2.H       = reshape(h.dat.cl.rands(h.dat.res.iclust), h.dat.cl.Ly, h.dat.cl.Lx);
         
